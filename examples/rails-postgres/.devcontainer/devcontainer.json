@@ -1,0 +1,29 @@
+{
+  "name": "Rails with PostgreSQL",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.ruby",
+        "castwide.solargraph",
+        "kaiwood.endwise",
+        "aki77.rails-db-schema",
+        "bung87.rails",
+        "hridoy.rails-snippets"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "solargraph.diagnostics": true
+      }
+    }
+  },
+
+  "forwardPorts": [3000, 5432],
+
+  "postCreateCommand": "gem install rails && bundle install || true",
+
+  "remoteUser": "vscode"
+}

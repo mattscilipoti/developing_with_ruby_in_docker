@@ -1,0 +1,6 @@
+# GitHub Pages Configuration
+
+theme: jekyll-theme-minimal
+title: Developing with Ruby in Docker
+description: A beginner-friendly guide to using Docker and VS Code DevContainers for Ruby development
+show_downloads: true

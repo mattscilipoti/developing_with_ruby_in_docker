@@ -1,0 +1,23 @@
+{
+  "name": "Basic Ruby Development",
+  "image": "mcr.microsoft.com/devcontainers/ruby:3.2",
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.ruby",
+        "castwide.solargraph",
+        "kaiwood.endwise"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+
+  "forwardPorts": [],
+
+  "postCreateCommand": "bundle install",
+
+  "remoteUser": "vscode"
+}
