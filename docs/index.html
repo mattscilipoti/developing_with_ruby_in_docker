@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developing with Ruby in Docker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/moon.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/monokai.css">
+    <style>
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+        }
+        .reveal code {
+            background-color: #3f3f3f;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        .reveal pre code {
+            max-height: 500px;
+        }
+        .reveal .slides section .fragment.highlight-current-blue.current-fragment {
+            color: #42affa;
+        }
+        .small-text {
+            font-size: 0.7em;
+        }
+        .two-column {
+            display: flex;
+            gap: 20px;
+        }
+        .two-column > div {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- Title Slide -->
+            <section>
+                <h1>Developing with Ruby in Docker</h1>
+                <h3>Using VS Code DevContainers</h3>
+                <p>
+                    <small>A beginner-friendly introduction</small>
+                </p>
+            </section>
+
+            <!-- Agenda -->
+            <section>
+                <h2>What We'll Cover</h2>
+                <ul>
+                    <li>What is Docker?</li>
+                    <li>Why use Docker for Ruby development?</li>
+                    <li>Introduction to VS Code DevContainers</li>
+                    <li>Setting up your first Ruby DevContainer</li>
+                    <li>Working with DevContainers</li>
+                    <li>Best Practices</li>
+                    <li>Resources</li>
+                </ul>
+            </section>
+
+            <!-- What is Docker? -->
+            <section>
+                <section>
+                    <h2>What is Docker? 🐳</h2>
+                    <p>Docker is a platform for developing, shipping, and running applications in containers.</p>
+                </section>
+
+                <section>
+                    <h3>Containers Explained</h3>
+                    <ul>
+                        <li>Lightweight, standalone packages</li>
+                        <li>Include everything needed to run an application</li>
+                        <li>Isolated from other containers and the host system</li>
+                        <li>Consistent across different environments</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Docker vs Virtual Machines</h3>
+                    <div class="two-column">
+                        <div>
+                            <h4>Containers</h4>
+                            <ul class="small-text">
+                                <li>Share host OS kernel</li>
+                                <li>Lightweight (MBs)</li>
+                                <li>Start in seconds</li>
+                                <li>More efficient</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Virtual Machines</h4>
+                            <ul class="small-text">
+                                <li>Full OS per VM</li>
+                                <li>Heavy (GBs)</li>
+                                <li>Start in minutes</li>
+                                <li>More isolated</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Why Docker for Ruby? -->
+            <section>
+                <section>
+                    <h2>Why Docker for Ruby Development? 💎</h2>
+                </section>
+
+                <section>
+                    <h3>Key Benefits</h3>
+                    <ul>
+                        <li><strong>Consistent Environment</strong> - Same setup across all machines</li>
+                        <li><strong>Easy Onboarding</strong> - New developers start in minutes</li>
+                        <li><strong>Version Management</strong> - Run multiple Ruby versions easily</li>
+                        <li><strong>Clean Host System</strong> - No local gem conflicts</li>
+                        <li><strong>Production Parity</strong> - Dev matches production closely</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Common Challenges Solved</h3>
+                    <ul>
+                        <li>"It works on my machine" syndrome</li>
+                        <li>Ruby version conflicts</li>
+                        <li>System dependency issues</li>
+                        <li>Complex setup documentation</li>
+                        <li>Database and service configuration</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- VS Code DevContainers -->
+            <section>
+                <section>
+                    <h2>VS Code DevContainers</h2>
+                    <p>Development Containers make it easy to develop inside Docker containers</p>
+                </section>
+
+                <section>
+                    <h3>What are DevContainers?</h3>
+                    <ul>
+                        <li>VS Code extension for container-based development</li>
+                        <li>Full-featured development environment in a container</li>
+                        <li>Configuration as code</li>
+                        <li>Shareable and reproducible</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>How It Works</h3>
+                    <ol>
+                        <li>Define your dev environment in <code>.devcontainer</code> folder</li>
+                        <li>VS Code builds and runs the container</li>
+                        <li>Your editor connects to the container</li>
+                        <li>All development happens inside the container</li>
+                        <li>Files are synced automatically</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h3>Prerequisites</h3>
+                    <ul>
+                        <li>Docker Desktop installed</li>
+                        <li>VS Code installed</li>
+                        <li>Dev Containers extension installed</li>
+                    </ul>
+                    <p class="small-text">Extension ID: <code>ms-vscode-remote.remote-containers</code></p>
+                </section>
+            </section>
+
+            <!-- Setting Up Ruby DevContainer -->
+            <section>
+                <section>
+                    <h2>Setting Up Your First Ruby DevContainer</h2>
+                </section>
+
+                <section>
+                    <h3>Step 1: Create Configuration</h3>
+                    <p>Create a <code>.devcontainer</code> folder in your project root</p>
+                    <pre><code data-trim data-noescape class="language-bash">
+mkdir .devcontainer
+cd .devcontainer
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Step 2: devcontainer.json</h3>
+                    <p>Main configuration file</p>
+                    <pre><code data-trim data-noescape class="language-json">
+{
+  "name": "Ruby Development",
+  "image": "mcr.microsoft.com/devcontainers/ruby:3.2",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.ruby",
+        "castwide.solargraph"
+      ]
+    }
+  },
+  "forwardPorts": [3000],
+  "postCreateCommand": "bundle install"
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Step 3: Open in Container</h3>
+                    <ol>
+                        <li>Press <code>F1</code> or <code>Ctrl+Shift+P</code></li>
+                        <li>Type "Dev Containers: Reopen in Container"</li>
+                        <li>Wait for container to build</li>
+                        <li>Start developing!</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h3>Alternative: Using Dockerfile</h3>
+                    <p>For more control, create a custom Dockerfile</p>
+                    <pre><code data-trim data-noescape class="language-dockerfile">
+FROM ruby:3.2
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /workspace
+
+# Install gems
+COPY Gemfile* ./
+RUN bundle install
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>devcontainer.json with Dockerfile</h3>
+                    <pre><code data-trim data-noescape class="language-json">
+{
+  "name": "Ruby Development",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.ruby",
+        "castwide.solargraph",
+        "kaiwood.endwise"
+      ]
+    }
+  },
+  "forwardPorts": [3000],
+  "postCreateCommand": "bundle install"
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Working with DevContainers -->
+            <section>
+                <section>
+                    <h2>Working with DevContainers</h2>
+                </section>
+
+                <section>
+                    <h3>Running Ruby Commands</h3>
+                    <p>Use the integrated terminal - it's already inside the container!</p>
+                    <pre><code data-trim data-noescape class="language-bash">
+# Run Ruby scripts
+ruby app.rb
+
+# Use bundler
+bundle exec rake db:migrate
+
+# Start Rails server
+rails server
+
+# Run tests
+rspec
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Adding Services (PostgreSQL, Redis)</h3>
+                    <p>Use Docker Compose for multi-container setups</p>
+                    <pre><code data-trim data-noescape class="language-yaml">
+# docker-compose.yml
+version: '3'
+services:
+  app:
+    build: .devcontainer
+    volumes:
+      - .:/workspace
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: password
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Update devcontainer.json</h3>
+                    <pre><code data-trim data-noescape class="language-json">
+{
+  "name": "Ruby with PostgreSQL",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.ruby",
+        "castwide.solargraph"
+      ]
+    }
+  },
+  "forwardPorts": [3000]
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Debugging Ruby Code</h3>
+                    <p>DevContainers support full debugging capabilities</p>
+                    <ol class="small-text">
+                        <li>Add <code>debug</code> gem to your Gemfile</li>
+                        <li>Set breakpoints in VS Code</li>
+                        <li>Use the Debug panel to start debugging</li>
+                        <li>Inspect variables, step through code</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h3>Common Commands</h3>
+                    <table class="small-text">
+                        <tr>
+                            <td><code>F1 → Rebuild Container</code></td>
+                            <td>Rebuild from scratch</td>
+                        </tr>
+                        <tr>
+                            <td><code>F1 → Reopen Locally</code></td>
+                            <td>Exit container</td>
+                        </tr>
+                        <tr>
+                            <td><code>F1 → Show Container Log</code></td>
+                            <td>Debug issues</td>
+                        </tr>
+                    </table>
+                </section>
+            </section>
+
+            <!-- Best Practices -->
+            <section>
+                <section>
+                    <h2>Best Practices 🌟</h2>
+                </section>
+
+                <section>
+                    <h3>Configuration Management</h3>
+                    <ul>
+                        <li>Version control your <code>.devcontainer</code> folder</li>
+                        <li>Document any manual setup steps</li>
+                        <li>Use <code>postCreateCommand</code> for automation</li>
+                        <li>Keep configurations minimal and focused</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Performance Tips</h3>
+                    <ul>
+                        <li>Use named volumes for gems/node_modules</li>
+                        <li>Leverage Docker layer caching</li>
+                        <li>Don't mount system files unnecessarily</li>
+                        <li>Use <code>.dockerignore</code> file</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Security Considerations</h3>
+                    <ul>
+                        <li>Don't commit secrets in configuration</li>
+                        <li>Use environment variables for sensitive data</li>
+                        <li>Keep base images updated</li>
+                        <li>Run as non-root user when possible</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Team Collaboration</h3>
+                    <ul>
+                        <li>Share DevContainer configurations in the repo</li>
+                        <li>Document any local-only settings</li>
+                        <li>Use consistent base images across team</li>
+                        <li>Test configurations on different platforms</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Example Project Structure -->
+            <section>
+                <h2>Example Project Structure</h2>
+                <pre><code data-trim data-noescape class="language-plaintext">
+my-ruby-app/
+├── .devcontainer/
+│   ├── devcontainer.json
+│   └── Dockerfile
+├── app/
+│   └── main.rb
+├── Gemfile
+├── Gemfile.lock
+├── docker-compose.yml (optional)
+└── README.md
+                </code></pre>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section>
+                <section>
+                    <h2>Common Issues & Solutions</h2>
+                </section>
+
+                <section>
+                    <h3>Container Won't Build</h3>
+                    <ul class="small-text">
+                        <li><strong>Problem:</strong> Build fails with dependency errors</li>
+                        <li><strong>Solution:</strong> Check Dockerfile syntax, verify base image</li>
+                        <li><strong>Tip:</strong> Use <code>F1 → Show Container Log</code></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Slow Performance</h3>
+                    <ul class="small-text">
+                        <li><strong>Problem:</strong> File operations are slow</li>
+                        <li><strong>Solution:</strong> Use named volumes for dependencies</li>
+                        <li><strong>Mac/Windows:</strong> Consider consistency settings</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Port Already in Use</h3>
+                    <ul class="small-text">
+                        <li><strong>Problem:</strong> Can't forward port 3000</li>
+                        <li><strong>Solution:</strong> Stop local services or change port mapping</li>
+                        <li><strong>Config:</strong> Update <code>forwardPorts</code> in devcontainer.json</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Resources -->
+            <section>
+                <section>
+                    <h2>Resources & Next Steps 📚</h2>
+                </section>
+
+                <section>
+                    <h3>Official Documentation</h3>
+                    <ul class="small-text">
+                        <li><a href="https://code.visualstudio.com/docs/devcontainers/containers">VS Code DevContainers Docs</a></li>
+                        <li><a href="https://containers.dev/">Development Containers Specification</a></li>
+                        <li><a href="https://docs.docker.com/">Docker Documentation</a></li>
+                        <li><a href="https://www.ruby-lang.org/en/documentation/">Ruby Documentation</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Sample Repositories</h3>
+                    <ul class="small-text">
+                        <li><a href="https://github.com/microsoft/vscode-dev-containers">Microsoft's DevContainer Templates</a></li>
+                        <li><a href="https://github.com/devcontainers/templates">Community DevContainer Templates</a></li>
+                        <li>This presentation's repo: Example configurations included!</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Community & Learning</h3>
+                    <ul class="small-text">
+                        <li>Docker Hub - Pre-built Ruby images</li>
+                        <li>VS Code DevContainer extension marketplace</li>
+                        <li>Ruby community forums and Discord</li>
+                        <li>Docker Community Slack</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Try It Yourself!</h3>
+                    <ol class="small-text">
+                        <li>Install Docker Desktop & VS Code</li>
+                        <li>Install Dev Containers extension</li>
+                        <li>Clone a Ruby project (or start fresh)</li>
+                        <li>Add a <code>.devcontainer</code> folder</li>
+                        <li>Open in container and start coding!</li>
+                    </ol>
+                </section>
+            </section>
+
+            <!-- Q&A -->
+            <section>
+                <h2>Questions? 🤔</h2>
+                <p>Thank you for your attention!</p>
+                <br>
+                <p class="small-text">
+                    <a href="https://github.com/mattscilipoti/developing_with_ruby_in_docker">
+                        github.com/mattscilipoti/developing_with_ruby_in_docker
+                    </a>
+                </p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+            width: 1280,
+            height: 720,
+            margin: 0.1,
+            minScale: 0.2,
+            maxScale: 2.0
+        });
+    </script>
+</body>
+</html>
