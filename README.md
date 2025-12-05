@@ -18,6 +18,8 @@ The presentation covers:
 
 **Duration:** Approximately 20 minutes
 
+> **Note:** If GitHub Pages is not yet enabled, see [GitHub Pages Setup Instructions](GITHUB_PAGES_SETUP.md)
+
 ## 📁 Example Projects
 
 This repository includes three practical examples to help you get started:
@@ -62,6 +64,8 @@ An advanced setup showing:
    ruby app.rb
    ```
 
+📖 **[Full Quick Start Guide](QUICKSTART.md)** - Get started in 5 minutes!
+
 ## 📚 Resources
 
 ### Official Documentation
@@ -72,6 +76,15 @@ An advanced setup showing:
 ### Community Templates
 - [Microsoft's DevContainer Templates](https://github.com/microsoft/vscode-dev-containers)
 - [DevContainers Community Templates](https://github.com/devcontainers/templates)
+
+📖 **[Extended Resources List](RESOURCES.md)** - Videos, books, courses, and more!
+
+## 🛠️ Additional Guides
+
+- **[Quick Start Guide](QUICKSTART.md)** - Get started in 5 minutes
+- **[Troubleshooting Guide](TROUBLESHOOTING.md)** - Solutions to common issues
+- **[Speaker Notes](SPEAKER_NOTES.md)** - For presenting this material
+- **[GitHub Pages Setup](GITHUB_PAGES_SETUP.md)** - Deployment instructions
 
 ## 🎯 Target Audience
 
